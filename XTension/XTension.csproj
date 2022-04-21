@@ -125,6 +125,10 @@
     <Content Include="images\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XTensionCore\XTensionCore.csproj">
+      <Project>{90edcc9b-5190-454e-86b3-c9870a8ab6e7}</Project>
+      <Name>XTensionCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XTensionStaadInterop\XTensionStaadInterop.csproj">
       <Project>{f76b78c3-c552-4916-96b4-12089196b50f}</Project>
       <Name>XTensionStaadInterop</Name>
