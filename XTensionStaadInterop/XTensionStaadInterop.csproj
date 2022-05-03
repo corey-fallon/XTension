@@ -112,9 +112,6 @@
     <Reference Include="VMDataBridge, Version=2.14.0.4641, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.14.0.4641\lib\net48\VMDataBridge.dll</HintPath>
     </Reference>
-	    <COMFileReference Include="C:\Program Files\Bentley\Engineering\STAAD.Pro CONNECT Edition\STAAD\StaadPro.dll">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMFileReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StaadExporter.cs" />
@@ -126,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenSTAADWrapper\OpenSTAADWrapper.csproj">
+      <Project>{0bbc2c62-81b5-451f-94a4-866340b687a2}</Project>
+      <Name>OpenSTAADWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

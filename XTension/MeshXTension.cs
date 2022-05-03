@@ -5,18 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.DesignScript.Geometry;
+using Dynamo.Graph.Nodes;
 
 using XTensionCore.Parsers;
 using XTensionCore.Mappers;
 using XTensionCore.DataObjects;
 using XTensionCore.Utilities;
-
 using XTensionStaadInterop;
+
 
 namespace XTension
 {
-    public static class MeshXTension
+    public class MeshXTension
     {
+        private MeshXTension()
+        {
+
+        }
+
         public static List<Line> GetEdgeLines(Mesh mesh)
         {
             return MeshUtilities.GetEdgeLines(mesh);

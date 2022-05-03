@@ -4,8 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
-using OpenSTAADUI;
+using OpenSTAADWrapper;
 using Autodesk.DesignScript.Geometry;
 
 namespace XTensionStaadInterop
@@ -14,52 +16,37 @@ namespace XTensionStaadInterop
     {
         public static void Export(Mesh mesh)
         {
-            OpenSTAAD openStaad = (OpenSTAAD)Marshal.GetActiveObject("StaadPro.OpenSTAAD");
-            OSGeometryUI geometry = openStaad.Geometry;
-
-            Dictionary<int, int> staadNodeIdByVertexPositionIndex = new Dictionary<int, int>();
-
-            Point point;
-            for (int i = 0; i < mesh.VertexPositions.Length; i++)
+            using (OpenStaad os = new OpenStaad())
             {
-                point = mesh.VertexPositions[i];
-                int staadNodeId = AddNode(geometry, point.X, point.Y, point.Z);
-                staadNodeIdByVertexPositionIndex.Add(i, staadNodeId);
-            }
+                OpenStaadGeometry geometry = os.Geometry;
 
-            foreach (IndexGroup indexGroup in mesh.FaceIndices)
-            {
-                if (indexGroup.Count == 3)
+                Dictionary<int, int> staadNodeIdByVertexPositionIndex = new Dictionary<int, int>();
+
+                Point point;
+                for (int i = 0; i < mesh.VertexPositions.Length; i++)
+                {
+                    point = mesh.VertexPositions[i];
+                    int staadNodeId = geometry.AddNode(point.X, point.Y, point.Z);
+                    staadNodeIdByVertexPositionIndex.Add(i, staadNodeId);
+                }
+
+                foreach (IndexGroup indexGroup in mesh.FaceIndices)
                 {
                     int staadNodeIdA = staadNodeIdByVertexPositionIndex[(int)indexGroup.A];
                     int staadNodeIdB = staadNodeIdByVertexPositionIndex[(int)indexGroup.B];
                     int staadNodeIdC = staadNodeIdByVertexPositionIndex[(int)indexGroup.C];
-                    AddPlate(geometry, staadNodeIdA, staadNodeIdB, staadNodeIdC, null);
-                }
+                    if (indexGroup.Count == 3)
+                    {
+                        geometry.AddPlate(staadNodeIdA, staadNodeIdB, staadNodeIdC);
+                    }
 
-                if (indexGroup.Count == 4)
-                {
-                    int staadNodeIdA = staadNodeIdByVertexPositionIndex[(int)indexGroup.A];
-                    int staadNodeIdB = staadNodeIdByVertexPositionIndex[(int)indexGroup.B];
-                    int staadNodeIdC = staadNodeIdByVertexPositionIndex[(int)indexGroup.C];
-                    int staadNodeIdD = staadNodeIdByVertexPositionIndex[(int)indexGroup.D];
-                    AddPlate(geometry, staadNodeIdA, staadNodeIdB, staadNodeIdC, staadNodeIdD);
+                    if (indexGroup.Count == 4)
+                    {
+                        int staadNodeIdD = staadNodeIdByVertexPositionIndex[(int)indexGroup.D];
+                        geometry.AddPlate(staadNodeIdA, staadNodeIdB, staadNodeIdC, staadNodeIdD);
+                    }
                 }
             }
-
-            openStaad = null;
-        }
-
-        public static int AddNode(OSGeometryUI geometry, double coordX, double coordY, double coordZ)
-        {
-            dynamic retval = geometry.AddNode(coordX, coordY, coordZ);
-            return retval;
-        }
-
-        public static int AddPlate(OSGeometryUI geometry, int nodeA, int nodeB, int nodeC, int? nodeD)
-        {
-            dynamic retval = geometry.AddPlate(nodeA, nodeB, nodeC, nodeD);
-            return retval;
         }
     }
 }

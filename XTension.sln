@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTensionStaadInterop", "XTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTensionCore", "XTensionCore\XTensionCore.csproj", "{90EDCC9B-5190-454E-86B3-C9870A8AB6E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSTAADWrapper", "OpenSTAADWrapper\OpenSTAADWrapper.csproj", "{0BBC2C62-81B5-451F-94A4-866340B687A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenSTAADWrapperDemo", "OpenSTAADWrapperDemo\OpenSTAADWrapperDemo.csproj", "{C45DAAA5-0E2E-4D6A-BF4E-A9E4CF677FAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{90EDCC9B-5190-454E-86B3-C9870A8AB6E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90EDCC9B-5190-454E-86B3-C9870A8AB6E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90EDCC9B-5190-454E-86B3-C9870A8AB6E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBC2C62-81B5-451F-94A4-866340B687A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBC2C62-81B5-451F-94A4-866340B687A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBC2C62-81B5-451F-94A4-866340B687A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBC2C62-81B5-451F-94A4-866340B687A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C45DAAA5-0E2E-4D6A-BF4E-A9E4CF677FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C45DAAA5-0E2E-4D6A-BF4E-A9E4CF677FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C45DAAA5-0E2E-4D6A-BF4E-A9E4CF677FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C45DAAA5-0E2E-4D6A-BF4E-A9E4CF677FAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
