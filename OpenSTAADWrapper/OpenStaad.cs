@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace OpenSTAADWrapper
 {
@@ -20,55 +21,44 @@ namespace OpenSTAADWrapper
             OpenSTAAD = Marshal.GetActiveObject("StaadPro.OpenSTAAD");
         }
 
-        public double CalculateVirtualWorkDueToStrongAxisBending(int beamID, int realLoadCase, int virtualLoadCase)
+        public OpenStaadNode GetNodeByID(int nodeID)
         {
-            MaterialConstants material = Property.GetBeamMaterial(beamID);
-            SectionProperties properties = Property.GetBeamSectionPropertyValues(beamID);
-            var realMomentFunction = GetInternalForceFunction(beamID, realLoadCase, InternalForce.Mz);
-            var virtualMomentFunction = GetInternalForceFunction(beamID, virtualLoadCase, InternalForce.Mz);
-            double value = 0;
-            double xi;
-            double xj;
-            double Yi;
-            double Yj;
-            double yi;
-            double yj;
-            for (int i = 0; i < realMomentFunction.NumberOfValues - 1; i++)
-            {
-                xi = realMomentFunction.xValues[i];
-                xj = realMomentFunction.xValues[i + 1];
-                Yi = realMomentFunction.yValues[i];
-                Yj = realMomentFunction.yValues[i + 1];
-                yi = virtualMomentFunction.yValues[i];
-                yj = virtualMomentFunction.yValues[i + 1];
-
-                value += (xj - xi) / 6 * (yi * (2 * Yi + Yj) + yj * (Yi + 2 * Yj));
-            }
-            double E = material.ModulusOfElasticity;
-            double I = properties.Iz;
-            return value / (E * I);
+            return new OpenStaadNode(this, nodeID);
         }
 
-        public DiscreteUnivariateFunction GetInternalForceFunction(int beamID, int loadCaseID, InternalForce internalForce)
+        public List<OpenStaadNode> GetNodes()
         {
-            double beamLength = Geometry.GetBeamLength(beamID);
-            double distance;
-            double internalForceValue;
-            DiscreteUnivariateFunction internalForceFunction = new DiscreteUnivariateFunction();
-            for (int i = 0; i < 13; i++)
+            List<OpenStaadNode> nodes = new List<OpenStaadNode>();
+            foreach (var nodeID in Geometry.GetNodeList())
             {
-                distance = beamLength * i / 12;
-                internalForceValue = Output.GetIntermediateMemberForceAtDistance(beamID, distance, loadCaseID, internalForce);
-                internalForceFunction.Insert(distance, internalForceValue);
+                nodes.Add(GetNodeByID(nodeID));
             }
-            return internalForceFunction;
+            return nodes;
         }
 
-        public double GetBeamVolume(int beamID)
+        public OpenStaadBeam GetBeamByID(int beamID)
         {
-            double area = Property.GetBeamSectionPropertyValues(beamID).Ax;
-            double length = Geometry.GetBeamLength(beamID);
-            return area * length;
+            return new OpenStaadBeam(this, beamID);
+        }
+
+        public List<OpenStaadBeam> GetBeams()
+        {
+            List<OpenStaadBeam> beams = new List<OpenStaadBeam>();
+            foreach (var beamID in Geometry.GetBeamList())
+            {
+                beams.Add(GetBeamByID(beamID));
+            }
+            return beams;
+        }
+
+        public List<OpenStaadNode> GetSupportNodes()
+        {
+            List<OpenStaadNode> nodes = new List<OpenStaadNode>();
+            foreach (var nodeID in Support.GetSupportNodes())
+            {
+                nodes.Add(GetNodeByID(nodeID));
+            }
+            return nodes;
         }
 
         public void Dispose()

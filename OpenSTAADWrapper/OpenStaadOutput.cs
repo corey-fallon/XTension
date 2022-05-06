@@ -51,5 +51,38 @@ namespace OpenSTAADWrapper
             double[] forces = GetIntermediateMemberForcesAtDistance(memberID, distance, loadCaseID);
             return forces[(int)internalForce];
         }
+
+        public double[] GetIntermediateDeflectionAtDistance(int memberID, double distance, int loadCaseID)
+        {
+            dynamic yDisplacement = new double();
+            dynamic zDisplacement = new double();
+            dynamic retval = OSOutputUI.GetIntermediateDeflectionAtDistance(memberID, distance, loadCaseID, ref yDisplacement, ref zDisplacement);
+            return new double[] { yDisplacement, zDisplacement };
+        }
+
+        public double[] GetMaxSectionDisplacement(int memberID, string direction, int loadCaseID)
+        {
+            dynamic maximumValue = new double();
+            dynamic position = new double();
+            dynamic retval = OSOutputUI.GetMaxSectionDisplacement(memberID, direction, loadCaseID, ref maximumValue, ref position);
+            return new double[] { maximumValue, position };
+        }
+
+        public double[] GetMaxSectionDisplacement(int memberID, Direction direction, int loadCaseID)
+        {
+            return GetMaxSectionDisplacement(memberID, direction.ToString(), loadCaseID);
+        }
+
+        public double[] GetMemberEndForces(int memberID, int end, int loadCaseID, int localOrGlobal)
+        {
+            dynamic forces = new double[6];
+            dynamic retval = OSOutputUI.GetMemberEndForces(memberID, end, loadCaseID, ref forces, localOrGlobal);
+            return forces;
+        }
+
+        public double[] GetMemberEndForces(int memberID, MemberEnd end, int loadCaseID, CoordinateSystem coordinateSystem)
+        {
+            return GetMemberEndForces(memberID, (int)end, loadCaseID, (int)coordinateSystem);
+        }
     }
 }

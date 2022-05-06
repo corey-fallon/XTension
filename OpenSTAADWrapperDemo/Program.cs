@@ -11,9 +11,15 @@ namespace OpenSTAADWrapperDemo
     {
         static void Main(string[] args)
         {
+            using (OpenStaad os = new OpenStaad())
+            {
+                var supportNodes = os.GetSupportNodes();
 
+                foreach (var node in supportNodes)
+                {
+                    Console.WriteLine(node.GetSupportReactions(1));
+                }
+            }
         }
     }
-
-
 }

@@ -19,5 +19,13 @@ namespace OpenSTAADWrapper
         {
             return OSSupportUI.GetSupportCount();
         }
+
+        public int[] GetSupportNodes()
+        {
+            int supportCount = GetSupportCount();
+            dynamic supportNodeIDs = new int[supportCount];
+            dynamic retval = OSSupportUI.GetSupportNodes(ref supportNodeIDs);
+            return supportNodeIDs;
+        }
     }
 }

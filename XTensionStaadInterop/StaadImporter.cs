@@ -16,19 +16,12 @@ namespace XTensionStaadInterop
             List<Line> lines = new List<Line>();
             using (OpenStaad os = new OpenStaad())
             {
-                OpenStaadGeometry geometry = os.Geometry;
-
-                int[] beamList = geometry.GetBeamList();
-
-                foreach (int beamId in beamList)
+                foreach (var beam in os.GetBeams())
                 {
-                    int[] incidence = geometry.GetMemberIncidence(beamId);
-                    int nodeA = incidence[0];
-                    int nodeB = incidence[1];
-                    double[] startNodeCoordinates = geometry.GetNodeCoordinates(nodeA);
-                    double[] endNodeCoordinates = geometry.GetNodeCoordinates(nodeB);
-                    Point startPoint = Point.ByCoordinates(startNodeCoordinates[2], startNodeCoordinates[0], startNodeCoordinates[1]);
-                    Point endPoint = Point.ByCoordinates(endNodeCoordinates[2], endNodeCoordinates[0], endNodeCoordinates[1]);
+                    OpenStaadNode startNode = beam.StartNode;
+                    OpenStaadNode endNode = beam.EndNode;
+                    Point startPoint = Point.ByCoordinates(startNode.ZCoordinate, startNode.XCoordinate, startNode.YCoordinate);
+                    Point endPoint = Point.ByCoordinates(endNode.ZCoordinate, endNode.XCoordinate, endNode.YCoordinate);
                     lines.Add(Line.ByStartPointEndPoint(startPoint, endPoint));
                     startPoint.Dispose();
                     endPoint.Dispose();
@@ -42,15 +35,10 @@ namespace XTensionStaadInterop
             List<double> axialForce = new List<double>();
             using (OpenStaad os = new OpenStaad())
             {
-                OpenStaadGeometry geometry = os.Geometry;
-                OpenStaadOutput output = os.Output;
-                int[] beamList = geometry.GetBeamList();
-
-                foreach (int beamID in beamList)
+                foreach (var beam in os.GetBeams())
                 {
-                    double[] minMaxAxialForce = output.GetMinMaxAxialForce(beamID, loadCaseID);
-                    double min = minMaxAxialForce[0];
-                    double max = minMaxAxialForce[2];
+                    double min = beam.GetMinimumAxialForce(loadCaseID);
+                    double max = beam.GetMaximumAxialForce(loadCaseID);
                     if (Math.Abs(min) > max)
                     {
                         axialForce.Add(min);
