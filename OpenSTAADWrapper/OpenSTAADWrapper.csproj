@@ -41,9 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiscreteUnivariateFunction.cs" />
+    <Compile Include="MaterialConstants.cs" />
     <Compile Include="OpenStaad.cs" />
     <Compile Include="OpenStaadGeometry.cs" />
+    <Compile Include="OpenStaadLoad.cs" />
+    <Compile Include="OpenStaadOutput.cs" />
+    <Compile Include="OpenStaadProperty.cs" />
+    <Compile Include="OpenStaadSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SectionProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -114,8 +114,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StaadCalculator.cs" />
     <Compile Include="StaadExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaadImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

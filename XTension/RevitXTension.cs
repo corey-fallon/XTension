@@ -3,17 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenSTAADWrapper;
 
-namespace OpenSTAADWrapperDemo
+namespace XTension
 {
-    class Program
+    internal class RevitXTension
     {
-        static void Main(string[] args)
-        {
-
-        }
     }
-
-
 }

@@ -115,7 +115,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MemberXTension.cs" />
     <Compile Include="MeshXTension.cs" />
+    <Compile Include="PolygonXTension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,4 +138,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\OpenSTAADWrapper.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTension.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionCore.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionStaadInterop.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
