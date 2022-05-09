@@ -21,14 +21,26 @@ namespace OpenSTAADWrapper
             OpenSTAAD = Marshal.GetActiveObject("StaadPro.OpenSTAAD");
         }
 
-        public OpenStaadNode GetNodeByID(int nodeID)
+        public Node GetNodeByID(int nodeID)
         {
-            return new OpenStaadNode(this, nodeID);
+            if (NodeExists(nodeID))
+            {
+                return new Node(this, nodeID);
+            }
+            else
+            {
+                throw new Exception($"Node {nodeID} does not exist");
+            }
         }
 
-        public List<OpenStaadNode> GetNodes()
+        public bool NodeExists(int nodeID)
         {
-            List<OpenStaadNode> nodes = new List<OpenStaadNode>();
+            return Array.Exists<int>(Geometry.GetNodeList(), x => x == nodeID);
+        }
+
+        public List<Node> GetNodes()
+        {
+            List<Node> nodes = new List<Node>();
             foreach (var nodeID in Geometry.GetNodeList())
             {
                 nodes.Add(GetNodeByID(nodeID));
@@ -36,24 +48,36 @@ namespace OpenSTAADWrapper
             return nodes;
         }
 
-        public OpenStaadBeam GetBeamByID(int beamID)
+        public Member GetMemberByID(int beamID)
         {
-            return new OpenStaadBeam(this, beamID);
-        }
-
-        public List<OpenStaadBeam> GetBeams()
-        {
-            List<OpenStaadBeam> beams = new List<OpenStaadBeam>();
-            foreach (var beamID in Geometry.GetBeamList())
+            if (MemberExists(beamID))
             {
-                beams.Add(GetBeamByID(beamID));
+                return new Member(this, beamID);
             }
-            return beams;
+            else
+            {
+                throw new Exception($"Beam {beamID} does not exist");
+            }
         }
 
-        public List<OpenStaadNode> GetSupportNodes()
+        public bool MemberExists(int memberID)
         {
-            List<OpenStaadNode> nodes = new List<OpenStaadNode>();
+            return Array.Exists<int>(Geometry.GetBeamList(), x => x == memberID);
+        }
+
+        public List<Member> GetMembers()
+        {
+            List<Member> members = new List<Member>();
+            foreach (var memberID in Geometry.GetBeamList())
+            {
+                members.Add(GetMemberByID(memberID));
+            }
+            return members;
+        }
+
+        public List<Node> GetSupportNodes()
+        {
+            List<Node> nodes = new List<Node>();
             foreach (var nodeID in Support.GetSupportNodes())
             {
                 nodes.Add(GetNodeByID(nodeID));

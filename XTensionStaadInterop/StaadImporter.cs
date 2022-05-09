@@ -16,10 +16,10 @@ namespace XTensionStaadInterop
             List<Line> lines = new List<Line>();
             using (OpenStaad os = new OpenStaad())
             {
-                foreach (var beam in os.GetBeams())
+                foreach (var beam in os.GetMembers())
                 {
-                    OpenStaadNode startNode = beam.StartNode;
-                    OpenStaadNode endNode = beam.EndNode;
+                    Node startNode = beam.StartNode;
+                    Node endNode = beam.EndNode;
                     Point startPoint = Point.ByCoordinates(startNode.ZCoordinate, startNode.XCoordinate, startNode.YCoordinate);
                     Point endPoint = Point.ByCoordinates(endNode.ZCoordinate, endNode.XCoordinate, endNode.YCoordinate);
                     lines.Add(Line.ByStartPointEndPoint(startPoint, endPoint));
@@ -35,7 +35,7 @@ namespace XTensionStaadInterop
             List<double> axialForce = new List<double>();
             using (OpenStaad os = new OpenStaad())
             {
-                foreach (var beam in os.GetBeams())
+                foreach (var beam in os.GetMembers())
                 {
                     double min = beam.GetMinimumAxialForce(loadCaseID);
                     double max = beam.GetMaximumAxialForce(loadCaseID);

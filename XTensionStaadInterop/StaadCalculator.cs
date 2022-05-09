@@ -15,7 +15,7 @@ namespace XTensionStaadInterop
             List<double> virtualWorkByVolume = new List<double>();
             using (OpenStaad os = new OpenStaad())
             {
-                foreach (var beam in os.GetBeams())
+                foreach (var beam in os.GetMembers())
                 {
                     double virtualWork = beam.GetVirtualWorkDueToStrongAxisBending(realLoadCaseID, virtualLoadCaseID);
                     double volume = beam.Volume;

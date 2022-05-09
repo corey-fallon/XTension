@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace OpenSTAADWrapper
 {
-    public class OpenStaadBeam
+    public class Member
     {
         private OpenStaad os;
         public int ID { get; private set; }
 
-        internal OpenStaadBeam(OpenStaad os, int id)
+        internal Member(OpenStaad os, int id)
         {
             this.os = os;
             this.ID = id;
@@ -21,8 +21,8 @@ namespace OpenSTAADWrapper
         public double Volume { get => SectionProperties.Ax * Length; }
         public int StartNodeID { get => os.Geometry.GetMemberIncidence(ID)[0]; }
         public int EndNodeID { get => os.Geometry.GetMemberIncidence(ID)[1]; }
-        public OpenStaadNode StartNode { get => os.GetNodeByID(StartNodeID); }
-        public OpenStaadNode EndNode { get => os.GetNodeByID(EndNodeID); }
+        public Node StartNode { get => os.GetNodeByID(StartNodeID); }
+        public Node EndNode { get => os.GetNodeByID(EndNodeID); }
         public MaterialConstants MaterialConstants { get => os.Property.GetBeamMaterial(ID); }
         public SectionProperties SectionProperties { get => os.Property.GetBeamSectionPropertyValues(ID); }
 
@@ -96,27 +96,10 @@ namespace OpenSTAADWrapper
         {
             var realMomentFunction = GetInternalForceFunction(realLoadCaseID, InternalForce.Mz);
             var virtualMomentFunction = GetInternalForceFunction(virtualLoadCaseID, InternalForce.Mz);
-            double value = 0;
-            double xi;
-            double xj;
-            double Yi;
-            double Yj;
-            double yi;
-            double yj;
-            for (int i = 0; i < realMomentFunction.NumberOfValues - 1; i++)
-            {
-                xi = realMomentFunction.xValues[i];
-                xj = realMomentFunction.xValues[i + 1];
-                Yi = realMomentFunction.yValues[i];
-                Yj = realMomentFunction.yValues[i + 1];
-                yi = virtualMomentFunction.yValues[i];
-                yj = virtualMomentFunction.yValues[i + 1];
-
-                value += (xj - xi) / 6 * (yi * (2 * Yi + Yj) + yj * (Yi + 2 * Yj));
-            }
+            double integralValue = FunctionIntegrator.DefiniteIntegralOfProduct(realMomentFunction, virtualMomentFunction);
             double E = MaterialConstants.ModulusOfElasticity;
             double I = SectionProperties.Iz;
-            return value / (E * I);
+            return integralValue / (E * I);
         }
 
         public DiscreteUnivariateFunction GetInternalForceFunction(int loadCaseID, InternalForce internalForce)

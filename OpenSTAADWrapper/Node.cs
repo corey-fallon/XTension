@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace OpenSTAADWrapper
 {
-    public class OpenStaadNode
+    public class Node
     {
         private OpenStaad os;
         public int ID { get; private set; }
 
-        public OpenStaadNode(OpenStaad os, int id)
+        public Node(OpenStaad os, int id)
         {
             this.os = os;
             this.ID = id;
