@@ -11,12 +11,6 @@ namespace OpenSTAADWrapperDemo
     {
         static void Main(string[] args)
         {
-            //using (OpenStaad os = new OpenStaad())
-            //{
-            //    var node = os.GetNodeByID(9);
-            //}
-
-
         }
     }
 }

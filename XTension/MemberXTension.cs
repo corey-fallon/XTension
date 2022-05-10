@@ -23,17 +23,12 @@ namespace XTension
 
         public static List<double> GetVirtualWork(int realLoadCaseID, int virtualLoadCaseID)
         {
-            return StaadCalculator.GetVirtualWork(realLoadCaseID, virtualLoadCaseID);
+            return StaadCalculator.MemberDisplayValues(new VirtualWorkByVolume(realLoadCaseID, virtualLoadCaseID));
         }
 
-        public static double[] GetAxialForces(int loadCaseID)
+        public static List<double> GetAxialForce(int loadCaseID)
         {
-            return StaadImporter.GetAxialForce(loadCaseID).ToArray();
-        }
-
-        public static List<double> NormalizeList(List<double> list)
-        {
-            return StaadImporter.NormalizeList(list);
+            return StaadCalculator.MemberDisplayValues(new SignInvarientMaximumAxialForce(loadCaseID));
         }
     }
 }

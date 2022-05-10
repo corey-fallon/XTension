@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,19 +9,29 @@ namespace XTensionStaadInterop
 {
     public class StaadCalculator
     {
-        public static List<double> GetVirtualWork(int realLoadCaseID, int virtualLoadCaseID)
+        //public static List<double> MemberDisplayValues(MemberDisplayValue strategy)
+        //{
+        //    List<double> values = new List<double>();
+        //    using (OpenStaad os = new OpenStaad())
+        //    {
+        //        foreach (var member in os.GetMembers())
+        //        {
+        //            values.Add(strategy.GetValue(member));
+        //        }
+        //    }
+        //    return values;
+        //}
+
+        public static List<double> NormalizeList(List<double> list)
         {
-            List<double> virtualWorkByVolume = new List<double>();
-            using (OpenStaad os = new OpenStaad())
+            List<double> normalizedList = new List<double>();
+            double min = list.Min();
+            double max = list.Max();
+            foreach (double item in list)
             {
-                foreach (var beam in os.GetMembers())
-                {
-                    double virtualWork = beam.GetVirtualWorkDueToStrongAxisBending(realLoadCaseID, virtualLoadCaseID);
-                    double volume = beam.Volume;
-                    virtualWorkByVolume.Add(virtualWork / volume);
-                }
+                normalizedList.Add((item - min) / (max - min));
             }
-            return virtualWorkByVolume;
+            return normalizedList;
         }
     }
 }

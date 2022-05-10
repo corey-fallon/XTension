@@ -38,12 +38,6 @@ namespace OpenSTAADWrapper
             };
         }
 
-        public MaterialConstants GetBeamMaterial(int beamID)
-        {
-            string materialName = OSPropertyUI.GetBeamMaterialName(beamID);
-            return GetMaterialProperty(materialName);
-        }
-
         public string GetBeamSectionName(int beamID)
         {
             return OSPropertyUI.GetBeamSectionName(beamID);
@@ -80,13 +74,6 @@ namespace OpenSTAADWrapper
                 Tf = tf,
                 Tw = tw
             };
-        }
-
-        public SectionProperties GetBeamSectionPropertyValues(int beamID)
-        {
-            int propertyRefNo = GetBeamSectionPropertyRefNo(1);
-            SectionProperties properties = GetSectionPropertyValues(propertyRefNo);
-            return properties;
         }
     }
 }

@@ -41,21 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateSystem.cs" />
-    <Compile Include="Direction.cs" />
-    <Compile Include="DiscreteUnivariateFunction.cs" />
-    <Compile Include="ExtremeValueType.cs" />
-    <Compile Include="FunctionIntegrator.cs" />
-    <Compile Include="InternalForce.cs" />
+    <Compile Include="Coordinates.cs" />
     <Compile Include="MaterialConstants.cs" />
-    <Compile Include="MemberEnd.cs" />
     <Compile Include="OpenStaad.cs" />
-    <Compile Include="Member.cs" />
     <Compile Include="OpenStaadGeometry.cs" />
     <Compile Include="OpenStaadLoad.cs" />
-    <Compile Include="Node.cs" />
     <Compile Include="OpenStaadOutput.cs" />
-    <Compile Include="OpenStaadPlate.cs" />
     <Compile Include="OpenStaadProperty.cs" />
     <Compile Include="OpenStaadSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

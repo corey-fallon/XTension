@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MemberDisplayValue.cs" />
     <Compile Include="StaadCalculator.cs" />
     <Compile Include="StaadExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

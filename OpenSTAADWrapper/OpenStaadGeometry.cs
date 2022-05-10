@@ -19,29 +19,24 @@ namespace OpenSTAADWrapper
         {
             OSGeometryUI.CreateNode(nodeID, coordX, coordY, coordZ);
         }
-
         public int AddNode(double coordX, double coordY, double coordZ)
         {
             return OSGeometryUI.AddNode(coordX, coordY, coordZ);
         }
-
         public void DeleteNode(int nodeID)
         {
             OSGeometryUI.DeleteNode(nodeID);
         }
-
         public int GetLastNodeNo()
         {
             dynamic retval = OSGeometryUI.GetLastNodeNo();
             return retval;
         }
-
         public int GetNoOfSelectedNodes()
         {
             dynamic retval = OSGeometryUI.GetNoOfSelectedNodes();
             return retval;
         }
-
         public int[] GetSelectedNodes(int sorted)
         {
             int numberOfNodes = GetNoOfSelectedNodes();
@@ -49,14 +44,18 @@ namespace OpenSTAADWrapper
             OSGeometryUI.GetSelectedNodes(ref nodeIds, sorted);
             return nodeIds;
         }
-
-        public double[] GetNodeCoordinates(int nodeId)
+        public Coordinates GetNodeCoordinates(int nodeId)
         {
             dynamic coordX = new double();
             dynamic coordY = new double();
             dynamic coordZ = new double();
             OSGeometryUI.GetNodeCoordinates(nodeId, ref coordX, ref coordY, ref coordZ);
-            return new double[] { coordX, coordY, coordZ };
+            return new Coordinates()
+            {
+                XCoordinate = coordX,
+                YCoordinate = coordY,
+                ZCoordinate = coordZ
+            };
         }
 
         public int GetNodeCount()
