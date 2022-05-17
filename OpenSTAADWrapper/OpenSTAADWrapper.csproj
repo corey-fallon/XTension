@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
     <Compile Include="MaterialConstants.cs" />
+    <Compile Include="MemberNotFoundException.cs" />
     <Compile Include="OpenStaad.cs" />
     <Compile Include="OpenStaadGeometry.cs" />
     <Compile Include="OpenStaadLoad.cs" />

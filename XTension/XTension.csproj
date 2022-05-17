@@ -110,6 +110,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Triangle">
+      <HintPath>..\..\Triangle.NET\src\Triangle\bin\Debug\netstandard2.0\Triangle.dll</HintPath>
+    </Reference>
     <Reference Include="VMDataBridge, Version=2.14.0.4641, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamoVisualProgramming.Core.2.14.0.4641\lib\net48\VMDataBridge.dll</HintPath>
     </Reference>
@@ -117,6 +120,7 @@
   <ItemGroup>
     <Compile Include="MemberXTension.cs" />
     <Compile Include="MeshXTension.cs" />
+    <Compile Include="PolygonXTension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -142,9 +146,11 @@
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTension.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionCore.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionStaadInterop.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\Triangle.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Core\2.13\packages\XTension\bin\" /y
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\OpenSTAADWrapper.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTension.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y
 xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionCore.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y
-xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionStaadInterop.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y</PostBuildEvent>
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\XTensionStaadInterop.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y
+xcopy "C:\Users\cfallon\Documents\Github\XTension\XTension\bin\Debug\Triangle.dll" "C:\Users\cfallon\AppData\Roaming\Dynamo\Dynamo Revit\2.10\packages\XTension\bin\" /y</PostBuildEvent>
   </PropertyGroup>
 </Project>

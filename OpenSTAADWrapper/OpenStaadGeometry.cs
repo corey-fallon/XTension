@@ -57,12 +57,10 @@ namespace OpenSTAADWrapper
                 ZCoordinate = coordZ
             };
         }
-
         public int GetNodeCount()
         {
             return OSGeometryUI.GetNodeCount();
         }
-
         public int[] GetNodeList()
         {
             int nodeCount = GetNodeCount();
@@ -70,38 +68,41 @@ namespace OpenSTAADWrapper
             OSGeometryUI.GetNodeList(ref nodeList);
             return nodeList;
         }
-
         public int GetMemberCount()
         {
             return OSGeometryUI.GetMemberCount();
         }
-
-        public int[] GetBeamList()
+        public int[] GetMemberList()
         {
             int memberCount = GetMemberCount();
             dynamic beamList = new int[memberCount];
             OSGeometryUI.GetBeamList(ref beamList);
             return beamList;
         }
-
-        public int[] GetMemberIncidence(int beamNumber)
+        public int[] GetMemberIncidence(int memberID)
         {
-            dynamic nodeA = new int();
-            dynamic nodeB = new int();
-            dynamic retval = OSGeometryUI.GetMemberIncidence(beamNumber, ref nodeA, ref nodeB);
-            return new int[] { nodeA, nodeB };
+            dynamic startNodeID = new int();
+            dynamic endNodeID = new int();
+            dynamic retval = OSGeometryUI.GetMemberIncidence(memberID, ref startNodeID, ref endNodeID);
+            if (retval == 0)
+            {
+                throw new MemberNotFoundException($"Member {memberID} not found");
+            }
+            return new int[] { startNodeID, endNodeID };
         }
-
-        public double GetBeamLength(int beamID)
+        public double GetMemberLength(int memberID)
         {
-            return OSGeometryUI.GetBeamLength(beamID);
+            dynamic retval = OSGeometryUI.GetBeamLength(memberID);
+            if (retval == 0.0)
+            {
+                throw new MemberNotFoundException($"Member {memberID} not found");
+            }
+            return retval;
         }
-
         public int AddPlate(double nodeA, double nodeB, double nodeC, double nodeD)
         {
             return OSGeometryUI.AddPlate(nodeA, nodeB, nodeC, nodeD);
         }
-
         public int AddPlate(double nodeA, double nodeB, double nodeC)
         {
             return OSGeometryUI.AddPlate(nodeA, nodeB, nodeC, null);

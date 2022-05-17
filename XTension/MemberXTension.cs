@@ -15,20 +15,5 @@ namespace XTension
         private MemberXTension()
         {
         }
-
-        public static List<Line> ImportStaadMembers()
-        {
-            return StaadImporter.ImportBeams();
-        }
-
-        public static List<double> GetVirtualWork(int realLoadCaseID, int virtualLoadCaseID)
-        {
-            return StaadCalculator.MemberDisplayValues(new VirtualWorkByVolume(realLoadCaseID, virtualLoadCaseID));
-        }
-
-        public static List<double> GetAxialForce(int loadCaseID)
-        {
-            return StaadCalculator.MemberDisplayValues(new SignInvarientMaximumAxialForce(loadCaseID));
-        }
     }
 }

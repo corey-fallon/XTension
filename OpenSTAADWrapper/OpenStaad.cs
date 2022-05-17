@@ -21,6 +21,21 @@ namespace OpenSTAADWrapper
             OpenSTAAD = Marshal.GetActiveObject("StaadPro.OpenSTAAD");
         }
 
+        public void UpdateStructure()
+        {
+            OpenSTAAD.UpdateStructure();
+        }
+
+        public int SetSilentMode(int flag)
+        {
+            return OpenSTAAD.SetSilentMode(flag);
+        }
+
+        public int AnalyzeEx(int silent, int hidden, int wait)
+        {
+            return OpenSTAAD.AnalyzeEx(silent, hidden, wait);
+        }
+
         public void Dispose()
         {
             OpenSTAAD = null;

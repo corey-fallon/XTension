@@ -27,5 +27,25 @@ namespace OpenSTAADWrapper
             dynamic retval = OSLoadUI.GetPrimaryLoadCaseNumbers(ref loadCaseIDs);
             return loadCaseIDs;
         }
+
+        public int CreateNewPrimaryLoad(string primaryLoadTitle)
+        {
+            return OSLoadUI.CreateNewPrimaryLoad(primaryLoadTitle);
+        }
+
+        public bool SetLoadActive(int loadCaseID)
+        {
+            return OSLoadUI.SetLoadActive(loadCaseID);
+        }
+
+        public bool AddNodalLoad(int nodeID, double fx, double fy, double fz, double mx, double my, double mz)
+        {
+            return OSLoadUI.AddNodalLoad(nodeID, fx, fy, fz, mx, my, mz);
+        }
+
+        public int DeletePrimaryLoadCases(int primaryLoadCaseNo, bool referenceLoads)
+        {
+            return OSLoadUI.DeletePrimaryLoadCases(primaryLoadCaseNo, referenceLoads);
+        }
     }
 }
