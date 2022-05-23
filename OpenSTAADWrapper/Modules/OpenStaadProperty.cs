@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenStaadSharp.DataObjects;
+using OpenStaadSharp.Enumerations;
 
-namespace OpenSTAADWrapper
+namespace OpenStaadSharp
 {
     public class OpenStaadProperty
     {
@@ -13,6 +15,21 @@ namespace OpenSTAADWrapper
         internal OpenStaadProperty(dynamic property)
         {
             OSPropertyUI = property;
+        }
+
+        public void AddControlDependentRelation(int controlNode, int rigidXYYZZX, int fX, int fY, int fZ, int mX, int mY, int mZ, int[] dependentNodeArray)
+        {
+            dynamic retval = OSPropertyUI.AddControlDependentRelation(controlNode, rigidXYYZZX, fX, fY, fZ, mX, mY, mZ, dependentNodeArray);
+        }
+
+        public void AddControlDependentRelation(int controlNode, int[] dependentNodes, ControlDependentRelationPreset preset)
+        {
+            AddControlDependentRelation(controlNode, (int)preset, 0, 0, 0, 0, 0, 0, dependentNodes);
+        }
+
+        public void DeleteAllControlDependentRelations()
+        {
+            dynamic retval = OSPropertyUI.DeleteAllControlDependentRelations();
         }
 
         public string GetBeamMaterialName(int beamID)

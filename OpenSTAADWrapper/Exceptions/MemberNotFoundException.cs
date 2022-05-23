@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace OpenSTAADWrapper
+namespace OpenStaadSharp.Exceptions
 {
     [Serializable]
     internal class MemberNotFoundException : Exception

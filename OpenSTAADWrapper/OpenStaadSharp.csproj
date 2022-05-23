@@ -7,7 +7,7 @@
     <ProjectGuid>{0BBC2C62-81B5-451F-94A4-866340B687A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenSTAADWrapper</RootNamespace>
+    <RootNamespace>OpenStaadSharp</RootNamespace>
     <AssemblyName>OpenSTAADWrapper</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,17 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates.cs" />
-    <Compile Include="MaterialConstants.cs" />
-    <Compile Include="MemberNotFoundException.cs" />
-    <Compile Include="OpenStaad.cs" />
-    <Compile Include="OpenStaadGeometry.cs" />
-    <Compile Include="OpenStaadLoad.cs" />
-    <Compile Include="OpenStaadOutput.cs" />
-    <Compile Include="OpenStaadProperty.cs" />
-    <Compile Include="OpenStaadSupport.cs" />
+    <Compile Include="DataObjects\Coordinates.cs" />
+    <Compile Include="DataObjects\MaterialConstants.cs" />
+    <Compile Include="Enumerations\ControlDependentRelationPreset.cs" />
+    <Compile Include="Enumerations\ForceUnitInput.cs" />
+    <Compile Include="Enumerations\LengthUnitInput.cs" />
+    <Compile Include="Exceptions\MemberNotFoundException.cs" />
+    <Compile Include="Modules\OpenStaad.cs" />
+    <Compile Include="Modules\OpenStaadGeometry.cs" />
+    <Compile Include="Modules\OpenStaadLoad.cs" />
+    <Compile Include="Modules\OpenStaadOutput.cs" />
+    <Compile Include="Modules\OpenStaadProperty.cs" />
+    <Compile Include="Modules\OpenStaadSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SectionProperties.cs" />
+    <Compile Include="DataObjects\SectionProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

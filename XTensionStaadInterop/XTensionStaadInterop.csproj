@@ -128,9 +128,9 @@
     <Content Include="images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenSTAADWrapper\OpenSTAADWrapper.csproj">
+    <ProjectReference Include="..\OpenSTAADWrapper\OpenStaadSharp.csproj">
       <Project>{0bbc2c62-81b5-451f-94a4-866340b687a2}</Project>
-      <Name>OpenSTAADWrapper</Name>
+      <Name>OpenStaadSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,8 +4,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using OpenStaadSharp.Enumerations;
 
-namespace OpenSTAADWrapper
+namespace OpenStaadSharp
 {
     public class OpenStaad : IDisposable
     {
@@ -19,6 +20,16 @@ namespace OpenSTAADWrapper
         public OpenStaad()
         {
             OpenSTAAD = Marshal.GetActiveObject("StaadPro.OpenSTAAD");
+        }
+
+        public void NewSTAADFile(string fileName, int lenUnitInput, int forceUnitInput)
+        {
+            OpenSTAAD.NewSTAADFile(fileName, lenUnitInput, forceUnitInput);
+        }
+
+        public void NewSTAADFile(string fileName, LengthUnitInput lengthUnitInput, ForceUnitInput forceUnitInput)
+        {
+            NewSTAADFile(fileName, (int)lengthUnitInput, (int)forceUnitInput);
         }
 
         public void UpdateStructure()

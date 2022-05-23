@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenSTAADWrapper;
+using OpenStaadSharp;
+using OpenStaadSharp.DataObjects;
+using OpenStaadSharp.Enumerations;
 
 namespace OpenSTAADWrapperDemo
 {
@@ -13,11 +16,76 @@ namespace OpenSTAADWrapperDemo
         {
             using (OpenStaad os = new OpenStaad())
             {
-                var diaphragmNodes = new int[] { 40, 32, 17 };
-                CenterOfRigidityAnalysis analysis = new CenterOfRigidityAnalysis(os, diaphragmNodes);
-                analysis.Start();
-                var results = analysis.GetResults();
+                os.Geometry.DeleteAllMembers();
+                os.Geometry.DeleteAllNodes();
+
+                MomentFrame mf = new MomentFrame()
+                {
+                    NumberOfBays = 1,
+                    NumberOfStories = 4,
+                    StoryHeight = 180,
+                    BayLength = 360
+                };
+
+                var mfBuilder = new MomentFrameBuilder(os);
+                mfBuilder.Build(mf);
+                os.UpdateStructure();
             }
+        }
+
+        static void WaitForFileToBeCreated(string filePath)
+        {
+            foreach (var path in StaadFileDirectory.GetFilePathsCreatedOnCreateNewModel(filePath))
+            {
+                while (!File.Exists(path))
+                {
+                    Console.WriteLine($"Found {Path.GetExtension(path)} at {DateTime.Now}");
+                    break;
+                }
+            }
+        }
+
+        static void CreateZXDiaphragm(OpenStaad os)
+        {
+            int[] dependentNodes = new int[] { 18, 19, 20, 37, 38, 39, 40, 57, 58, 59, 60, 77, 78, 79, 80 };
+            os.Property.AddControlDependentRelation(17, dependentNodes, ControlDependentRelationPreset.ZX);
+            os.UpdateStructure();
+            os.Property.DeleteAllControlDependentRelations();
+            os.UpdateStructure();
+        }
+
+        static void ThrowAway(OpenStaad os)
+        {
+            Coordinates targetCoordinates = new Coordinates() { XCoordinate = 1080, ZCoordinate = 0 };
+            double[] upperDisplacement = GetDisplacementAtPoint(os, 38, targetCoordinates);
+            double[] lowerDisplacement = GetDisplacementAtPoint(os, 73, targetCoordinates);
+
+            double DeltaX = upperDisplacement[0] - lowerDisplacement[0];
+            double DeltaZ = upperDisplacement[1] - lowerDisplacement[1];
+            double Delta = Math.Sqrt(Math.Pow(DeltaX, 2) + Math.Pow(DeltaZ, 2));
+
+            double h = 180;
+            double ratio = h / Delta;
+        }
+
+        static double[] GetDisplacementAtPoint(OpenStaad os, int controlNodeID, Coordinates pointCoordinates)
+        {
+            Coordinates controlNodeCoordinates = os.Geometry.GetNodeCoordinates(controlNodeID);
+
+            double Xo = controlNodeCoordinates.XCoordinate;
+            double Zo = controlNodeCoordinates.ZCoordinate;
+            double X = pointCoordinates.XCoordinate;
+            double Z = pointCoordinates.ZCoordinate;
+
+            double[] controlNodeDisplacement = os.Output.GetNodeDisplacements(controlNodeID, 1);
+            double DeltaXo = controlNodeDisplacement[0];
+            double DeltaZo = controlNodeDisplacement[2];
+            double ThetaYo = controlNodeDisplacement[4];
+
+            double DeltaX = DeltaXo + ThetaYo * (Z - Zo);
+            double DeltaZ = DeltaZo - ThetaYo * (X - Xo);
+
+            return new double[] { DeltaX, DeltaZ };
         }
     }
 

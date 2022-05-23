@@ -1,4 +1,4 @@
-﻿namespace OpenSTAADWrapper
+﻿namespace OpenStaadSharp.DataObjects
 {
     public class MaterialConstants
     {

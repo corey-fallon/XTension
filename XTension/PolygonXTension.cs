@@ -97,11 +97,16 @@ namespace XTension
             return points;
         }
 
-        public static List<Line> TriangulateToEdges(Polygon polygon, double maximumArea)
+        public static List<Line> TriangulateToEdges(Polygon polygon, double maximumArea, bool smoothing)
         {
+            Plane polygonPlane = polygon.BasePlane();
+            CoordinateSystem polygonCoordinateSystem = CoordinateSystem.ByPlane(polygonPlane);
+            CoordinateSystem worldCoordinateSystem = CoordinateSystem.Identity();
+            Polygon transformedPolygon = (Polygon)polygon.Transform(polygonCoordinateSystem, worldCoordinateSystem);
+
             var poly = new TriangleNet.Geometry.Polygon();
             var verticies = new List<TriangleNet.Geometry.Vertex>();
-            foreach (var point in polygon.Points)
+            foreach (var point in transformedPolygon.Points)
             {
                 verticies.Add(new TriangleNet.Geometry.Vertex(point.X, point.Y, 1));
             }
@@ -109,6 +114,12 @@ namespace XTension
             var options = new TriangleNet.Meshing.ConstraintOptions() { ConformingDelaunay = true };
             var quality = new TriangleNet.Meshing.QualityOptions() { MinimumAngle = 30, MaximumArea = maximumArea };
             var mesh = TriangleNet.Geometry.ExtensionMethods.Triangulate(poly, options, quality);
+
+            if (smoothing)
+            {
+                var smoother = new TriangleNet.Smoothing.SimpleSmoother();
+                smoother.Smooth(mesh, 25);
+            }
 
             var vertexByID = new Dictionary<int, TriangleNet.Geometry.Vertex>();
 
@@ -125,10 +136,18 @@ namespace XTension
                 Point startPoint = Point.ByCoordinates(startVertex.X, startVertex.Y);
                 Point endPoint = Point.ByCoordinates(endVertex.X, endVertex.Y);
                 Line line = Line.ByStartPointEndPoint(startPoint, endPoint);
-                lines.Add(line);
+                Line transformedLine = (Line)line.Transform(worldCoordinateSystem, polygonCoordinateSystem);
+                lines.Add(transformedLine);
                 startPoint.Dispose();
                 endPoint.Dispose();
+                line.Dispose();
             }
+
+            polygonPlane.Dispose();
+            polygonCoordinateSystem.Dispose();
+            worldCoordinateSystem.Dispose();
+            transformedPolygon.Dispose();
+            
             return lines;
         }
     }
